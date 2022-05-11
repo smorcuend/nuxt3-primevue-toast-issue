@@ -1,13 +1,25 @@
 <template>
   <div>
-    <h1>A very strange bug</h1>
-    <Button label="Trigger toast" @click="triggerToast"></Button>
+    <h1>PrimeVue Toast: A very strange bug with setup syntax</h1>
+    <Button
+      label="Trigger toast with useNuxtApp"
+      @click="triggerToastGlobal"
+      class="m-4"
+    ></Button>
+    <Button
+      label="Trigger toast with useToast"
+      @click="triggerToastComposition"
+      class="m-4"
+    ></Button>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useNuxtApp } from "#app";
+import { useToast } from "primevue/usetoast";
 const { $toast } = useNuxtApp();
-const triggerToast = () => {
+
+const triggerToastGlobal = () => {
   $toast.add({
     severity: "success",
     summary: "Success Message",
@@ -15,6 +27,19 @@ const triggerToast = () => {
     life: 3000
   });
 };
+const triggerToastComposition = () => {
+  const toast = useToast();
+  toast.add({
+    severity: "info",
+    summary: "Info Message",
+    detail: "Message Content",
+    life: 3000
+  });
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+.m-4 {
+  margin: 2rem;
+}
+</style>
